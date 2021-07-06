@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
+#include <string_view>
 
 namespace dmon {
-    auto syslog(const std::string& identifier) -> void;
+    auto syslog(std::string_view identifier) -> void;
 }

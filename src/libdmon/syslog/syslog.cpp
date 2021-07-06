@@ -10,13 +10,8 @@ namespace {
 }
 
 namespace dmon {
-    auto syslog(const std::string& identifier) -> void {
-        openlog(
-            identifier.empty() ? nullptr : identifier.c_str(),
-            default_options,
-            default_facility
-        );
-
+    auto syslog(std::string_view identifier) -> void {
+        openlog(identifier.data(), default_options, default_facility);
         timber::log_handler = &syslog_logger;
     }
 }
