@@ -1,8 +1,10 @@
+#include "pidfile/pidfile.h"
 #include "syslog/syslog.h"
 
 #include <dmon/dmon.h>
 
 #include <ext/except.h>
+#include <signal.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -10,6 +12,10 @@ namespace fs = std::filesystem;
 
 namespace dmon {
     auto daemonize(const options& opts) -> bool {
+        /*
+            Fork from the calling process and create the daemon
+        */
+
         // Fork off of the parent process
         auto pid = fork();
         if (pid < 0) {
@@ -35,18 +41,32 @@ namespace dmon {
         }
         if (pid > 0) return false;
 
-        umask(static_cast<mode_t>(opts.mask));
-
-        fs::current_path(opts.working_directory);
+        /*
+            Set up the daemon
+        */
 
         // Close all open file descriptors
         for (auto fd = sysconf(_SC_OPEN_MAX); fd >= 0; --fd) {
             close(fd);
         }
 
-        // Redirect all logging to syslog
         syslog(opts.identifier);
 
+        umask(static_cast<mode_t>(opts.mask));
+
+        fs::current_path(opts.working_directory);
+
+        make_pidfile(opts.pidfile);
+
         return true;
+    }
+
+    auto signal(const std::filesystem::path& pidfile, int sig) -> void {
+        kill(pidfile, sig);
+    }
+
+    auto stop(const std::filesystem::path& pidfile) -> void {
+        signal(pidfile, SIGTERM);
+        fs::remove(pidfile);
     }
 }

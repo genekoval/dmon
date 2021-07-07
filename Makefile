@@ -7,6 +7,7 @@ library := lib$(project)
 $(library).type := shared
 define $(library).libs
  ext++
+ fmt
  timber
 endef
 
