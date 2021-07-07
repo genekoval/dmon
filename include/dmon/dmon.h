@@ -5,7 +5,6 @@
 namespace dmon {
     struct options {
         std::string_view identifier;
-        std::filesystem::perms mask = std::filesystem::perms::none;
         std::filesystem::path pidfile;
         std::filesystem::path working_directory = "/";
     };

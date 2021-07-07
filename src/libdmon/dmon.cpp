@@ -52,7 +52,7 @@ namespace dmon {
 
         syslog(opts.identifier);
 
-        umask(static_cast<mode_t>(opts.mask));
+        umask(0);
 
         fs::current_path(opts.working_directory);
 
