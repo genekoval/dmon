@@ -1,9 +1,11 @@
+#include "permissions/permissions.h"
 #include "pidfile/pidfile.h"
 #include "syslog/syslog.h"
 
 #include <dmon/dmon.h>
 
 #include <ext/except.h>
+#include <ext/unix.h>
 #include <signal.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -57,6 +59,13 @@ namespace dmon {
         fs::current_path(opts.working_directory);
 
         make_pidfile(opts.pidfile);
+
+        // Assign privileges
+        if (opts.set_supplementary_groups) set_groups_for(opts.user);
+        else drop_groups();
+
+        set_group(opts.group);
+        set_user(opts.user);
 
         return true;
     }

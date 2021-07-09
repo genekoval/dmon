@@ -1,11 +1,16 @@
 #pragma once
 
+#include <ext/unix.h>
 #include <filesystem>
+#include <optional>
 
 namespace dmon {
     struct options {
+        const ext::group& group;
         std::string_view identifier;
         std::filesystem::path pidfile;
+        bool set_supplementary_groups = true;
+        const ext::user& user;
         std::filesystem::path working_directory = "/";
     };
 
