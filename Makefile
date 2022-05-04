@@ -5,13 +5,11 @@ STD := c++20
 
 library := lib$(project)
 $(library).type := shared
-define $(library).libs
- ext++
- fmt
- timber
-endef
+$(library).libs := ext++ fmt timber
 
 install := $(library)
 targets := $(install)
+
+files := $(include) $(src) Makefile VERSION
 
 include mkbuild/base.mk
