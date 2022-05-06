@@ -10,6 +10,6 @@ $(library).libs := ext++ fmt timber
 install := $(library)
 targets := $(install)
 
-files := $(include) $(src) Makefile VERSION
+files = $(include) $(src) Makefile VERSION
 
 include mkbuild/base.mk
