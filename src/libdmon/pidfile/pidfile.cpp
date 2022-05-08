@@ -83,13 +83,22 @@ namespace dmon {
         kill(read_pidfile(pidfile), signal);
     }
 
-    auto make_pidfile(const fs::path& pidfile) -> void {
-        if (fs::create_directories(pidfile.parent_path())) {
-            fs::permissions(pidfile.parent_path(), directory_permissions);
+    auto make_pidfile(
+        const fs::path& pidfile,
+        const ext::user& user,
+        const ext::group& group
+    ) -> void {
+        const auto directory = pidfile.parent_path();
+
+        if (fs::create_directories(directory)) {
+            fs::permissions(directory, directory_permissions);
+            ext::chown(directory, user, group);
         }
 
-        auto file = std::ofstream(pidfile);
-        file << getpid() << std::endl;
+        {
+            auto file = std::ofstream(pidfile);
+            file << getpid() << std::endl;
+        }
 
         fs::permissions(pidfile, file_permissions);
     }
