@@ -12,6 +12,10 @@
 
 namespace fs = std::filesystem;
 
+namespace {
+    constexpr mode_t mask = 0027;
+}
+
 namespace dmon {
     auto daemonize(const options& opts) -> bool {
         /*
@@ -54,7 +58,7 @@ namespace dmon {
 
         syslog(opts.identifier);
 
-        umask(0);
+        umask(mask);
 
         fs::current_path(opts.working_directory);
 
