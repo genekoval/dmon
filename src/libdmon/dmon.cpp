@@ -73,13 +73,4 @@ namespace dmon {
 
         return true;
     }
-
-    auto signal(const std::filesystem::path& pidfile, int sig) -> void {
-        kill(pidfile, sig);
-    }
-
-    auto stop(const std::filesystem::path& pidfile) -> void {
-        signal(pidfile, SIGTERM);
-        fs::remove(pidfile);
-    }
 }
