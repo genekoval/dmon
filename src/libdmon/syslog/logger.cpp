@@ -23,6 +23,6 @@ namespace dmon {
     }
 
     auto syslog_logger(const timber::log& log) noexcept -> void {
-        syslog(get_level(log.log_level), log.message.c_str());
+        syslog(get_level(log.log_level), "%s", log.message.c_str());
     }
 }
