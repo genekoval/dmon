@@ -20,6 +20,7 @@ namespace dmon {
     auto make_pidfile(const fs::path& pidfile) -> void {
         {
             auto file = std::ofstream(pidfile);
+            file.imbue(std::locale::classic());
             file << getpid() << std::endl;
         }
 
