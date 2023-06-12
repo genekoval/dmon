@@ -62,7 +62,7 @@ namespace dmon {
 
         fs::current_path(opts.working_directory);
 
-        make_pidfile(opts.pidfile, opts.user, opts.group);
+        make_pidfile(opts.pidfile);
 
         // Assign privileges
         if (opts.set_supplementary_groups) set_groups_for(opts.user);
