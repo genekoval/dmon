@@ -11,7 +11,7 @@ namespace dmon {
         std::filesystem::path pidfile;
         bool set_supplementary_groups = true;
         const ext::user& user;
-        std::filesystem::path working_directory = "/";
+        std::optional<std::filesystem::path> working_directory;
     };
 
     /**

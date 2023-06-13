@@ -1,3 +1,4 @@
+#include "environment/environment.hpp"
 #include "permissions/permissions.h"
 #include "pidfile/pidfile.h"
 #include "syslog/syslog.h"
@@ -60,7 +61,8 @@ namespace dmon {
 
         umask(mask);
 
-        fs::current_path(opts.working_directory);
+        const auto wd = opts.working_directory.value_or(opts.user.home());
+        fs::current_path(wd == "/dev/null" ? "/" : wd);
 
         make_pidfile(opts.pidfile);
 
@@ -70,6 +72,8 @@ namespace dmon {
 
         set_group(opts.group);
         set_user(opts.user);
+
+        set_env(opts.user);
 
         return true;
     }
