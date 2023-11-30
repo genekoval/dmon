@@ -26,9 +26,7 @@ namespace dmon {
         // Fork off of the parent process
         auto pid = fork();
         if (pid < 0) {
-            throw ext::system_error(
-                "Failed to fork off of the parent process"
-            );
+            throw ext::system_error("Failed to fork off of the parent process");
         }
         if (pid > 0) return false;
 
@@ -42,9 +40,7 @@ namespace dmon {
         // Fork off for the second time
         pid = fork();
         if (pid < 0) {
-            throw ext::system_error(
-                "Failed to fork off for the second time"
-            );
+            throw ext::system_error("Failed to fork off for the second time");
         }
         if (pid > 0) return false;
 
@@ -53,9 +49,7 @@ namespace dmon {
         */
 
         // Close all open file descriptors
-        for (auto fd = sysconf(_SC_OPEN_MAX); fd >= 0; --fd) {
-            close(fd);
-        }
+        for (auto fd = sysconf(_SC_OPEN_MAX); fd >= 0; --fd) { close(fd); }
 
         syslog(opts.identifier);
 

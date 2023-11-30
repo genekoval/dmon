@@ -9,11 +9,9 @@ namespace {
     /**
      * Permissions to apply to the pidfile.
      */
-    constexpr auto permissions =
-        fs::perms::owner_read |
-        fs::perms::owner_write |
-        fs::perms::group_read |
-        fs::perms::others_read;
+    constexpr auto permissions = fs::perms::owner_read |
+                                 fs::perms::owner_write |
+                                 fs::perms::group_read | fs::perms::others_read;
 }
 
 namespace dmon {

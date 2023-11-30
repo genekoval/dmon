@@ -13,13 +13,11 @@ namespace dmon {
         LOG_NOTICE,
         LOG_INFO,
         LOG_DEBUG,
-        LOG_DEBUG
-    };
+        LOG_DEBUG};
 
     auto get_level(timber::level level) -> int {
-        return levels[
-            static_cast<std::underlying_type_t<timber::level>>(level)
-        ];
+        return levels[static_cast<std::underlying_type_t<timber::level>>(level
+        )];
     }
 
     auto syslog_logger(const timber::log& log) noexcept -> void {

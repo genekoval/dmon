@@ -1,5 +1,5 @@
-#include "logger.h"
 #include "syslog.h"
+#include "logger.h"
 
 #include <syslog.h>
 

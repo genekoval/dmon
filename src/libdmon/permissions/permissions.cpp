@@ -6,18 +6,15 @@
 #include <unistd.h>
 
 namespace dmon {
-    auto drop_groups() -> void {
-        setgroups(0, nullptr);
-    }
+    auto drop_groups() -> void { setgroups(0, nullptr); }
 
     auto set_group(const ext::group& group) -> void {
         const auto gid = group.gid();
 
         if (setgid(gid) == -1) {
-            throw ext::system_error(fmt::format(
-                "could not set group ID to '{}'",
-                gid
-            ));
+            throw ext::system_error(
+                fmt::format("could not set group ID to '{}'", gid)
+            );
         }
     }
 
@@ -46,9 +43,9 @@ namespace dmon {
         }
 
         if (setgroups(ngroups, groups.get()) == -1) {
-            throw ext::system_error(fmt::format(
-                "could not set groups for '{}'", user.name()
-            ));
+            throw ext::system_error(
+                fmt::format("could not set groups for '{}'", user.name())
+            );
         }
     }
 
@@ -56,10 +53,9 @@ namespace dmon {
         const auto uid = user.uid();
 
         if (setuid(uid) == -1) {
-            throw ext::system_error(fmt::format(
-                "could not set user ID to '{}'",
-                uid
-            ));
+            throw ext::system_error(
+                fmt::format("could not set user ID to '{}'", uid)
+            );
         }
     }
 }
